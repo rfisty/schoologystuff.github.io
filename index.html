@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>Nice</title>
+	<meta charset="utf-8">
+	<link href="https://fonts.googleapis.com/css2?family=Titan+One&display=swap" rel="stylesheet">
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+
+	<style>
+		#clicky {
+			/* Rogfanog */
+			padding: 15vh 15vw;
+			transition:
+				background-color 0.5s,
+				box-shadow 0.5s,
+				width 0.5s,
+				transform 0.5s,
+				letter-spacing 0.5s,
+				text-shadow 0.5s;
+			left: 50%;
+			top: 40%;
+			transform: translate(-50%,-50%);
+			white-space: nowrap;
+			cursor: pointer;
+
+			/* Om */
+			position: fixed;
+			color: white;
+			border: none;
+			border-radius: 10vw;
+			font-size: 10vw;
+			font-family: "Comic Sans MS", "Comic Sans", cursive;
+			box-shadow: 0vw 15vh 0 rgb(18, 82, 33);
+			outline: none;
+			background: rgb(41, 187, 75);
+			/* animation: anim 1s infinite; */
+		}
+		#clicky:hover{
+			animation: none;
+			letter-spacing: 1vw;
+			text-shadow: 0 0 2vw white;
+		}
+		#clicky:active{
+			/* animation: none; */
+			box-shadow: 0vw 10vh 0 rgb(18, 82, 33);
+			transform: translate(calc(-50%), calc(-50% + 8vh));
+		}
+
+		@keyframes anim {
+			0% {
+				background: rgb(41, 187, 75);
+			}
+			50% {
+				background: rgb(132, 206, 150);
+			}
+			100% {
+				background: rgb(41, 187, 75);
+			}
+		}
+	</style>
+</head>
+<body>
+
+	<audio id="rickroll" controls hidden="true" id="rickroll">
+		<source src="rickroll.mp3" type="audio/mpeg">
+	</audio>
+
+	<button id="clicky">Click Me!</button>
+
+	<script>
+
+		let boxShadowColorUp = "rgb(18, 82, 33)"
+		let boxShadowColorDown = "rgb(18, 82, 33)"
+
+		let numclicks = 0;
+
+		let currState = "DOWN";
+		
+		let animateButton = function(){
+			if(currState === "DOWN"){
+				$("#clicky").css({
+					boxShadow: `0vw 15vh 0 ${boxShadowColorUp}`,
+					transform: "translate(calc(-50%), calc(-50%))"
+				})
+				currState = "UP";
+			} else if(currState === "UP"){
+				$("#clicky").css({
+					boxShadow: `0vw 10vh 0 ${boxShadowColorDown}`,
+					transform: "translate(calc(-50%), calc(-50% + 5vh))"
+				})
+				currState = "DOWN";
+			}
+		}
+
+		$("#clicky").mousedown( () => {
+			currState = "PRESSED";
+			$("#clicky").css({
+				boxShadow: `0vw 2vh 0 ${boxShadowColorDown}`,
+				transform: "translate(calc(-50%), calc(-50% + 13vh))"
+			})
+		})
+
+		$("#clicky").hover( () => {
+			currState = "HOVERED";
+			$("#clicky").css({
+				boxShadow: `0vw 8vh 0 ${boxShadowColorDown}`,
+				transform: "translate(calc(-50%), calc(-50% + 7vh))"
+			})
+		}, () => {
+			currState = "UP";
+			$("#clicky").css({
+				boxShadow: `0vw 15vh 0 ${boxShadowColorUp}`,
+				transform: "translate(calc(-50%), calc(-50%))"
+			})
+		})
+
+		$("#clicky").mouseup( () => {
+			currState = "HOVERED";
+			$("#clicky").css({
+				boxShadow: `0vw 8vh 0 ${boxShadowColorDown}`,
+				transform: "translate(calc(-50%), calc(-50% + 7vh))"
+			});
+		})
+
+		setInterval(() => {
+			animateButton();
+		}, 740);
+
+		$("#clicky").click( () => {
+			switch (numclicks) {
+				case 6:
+					$("#clicky").html("It's over.");
+					$("#clicky").css({
+						fontSize: "10vw"
+					})
+				case 5:
+					document.getElementById("rickroll").play();
+					$("#clicky").html("WHY WAS I CREATED THIS WAY");
+					$("#clicky").css({
+						fontSize: "2rem"
+					})
+					break;
+				case 4:
+					$("#clicky").html("ONE MORE!");
+					break;
+				case 3:
+					$("#clicky").html("A G A I N!");
+					break;
+				case 2:
+					$("#clicky").html("AGAIN!");
+					break;
+				case 1:
+					$("#clicky").html("Click!! :D");
+					break;
+				case 0:
+					$("#clicky").html("Click again!");
+					break;
+				default:
+					break;
+			}
+
+			numclicks ++;
+		})
+
+	</script>
+</body>
+</html>
